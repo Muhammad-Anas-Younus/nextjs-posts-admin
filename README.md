@@ -32,7 +32,7 @@ https://www.untitledui.com/components/blog-post-sections
 - Shadcn/ui for components
 - React Query for API data fetching, caching, and mutations
 
-#Note: 
+# Note: 
 
 Creating/Updating/Deleting Post will not have any effect on the actual data. 
 
