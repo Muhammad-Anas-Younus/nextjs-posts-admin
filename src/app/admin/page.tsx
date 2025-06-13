@@ -27,7 +27,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Edit, Loader2, Plus, Trash2 } from "lucide-react";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 
 export interface Post {
   id: number;
@@ -47,8 +47,7 @@ export default function PostsPage() {
 
   const { mutateAsync: createPost } = useCreateNewPost();
   const { mutateAsync: editPost } = useEditPost();
-  const { mutateAsync: deletePost, isPending: isDeletingPost } =
-    useDeletePost();
+  const { mutateAsync: deletePost } = useDeletePost();
 
   const [editingPost, setEditingPost] = useState<Post | null>(null);
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
