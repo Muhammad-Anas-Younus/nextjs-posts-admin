@@ -1,3 +1,6 @@
+# How to access admin panel 
+I have added a dummy login page, you can enter whatever email and password and click on sign in button and it will redirect you to /admin page or you can go directly to /admin page via the URL
+
 ## How to run this project locally
 
 First, clone the project and download the dependencies:
