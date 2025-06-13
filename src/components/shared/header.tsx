@@ -1,14 +1,53 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-const navigation = [
+interface IMenuItem {
+  name: string;
+  href: string;
+}
+
+const navigation: IMenuItem[] = [
   { name: "Home", href: "/" },
   { name: "Posts", href: "/posts" },
 ];
+
+const NavLink = ({
+  item,
+  onClick,
+}: {
+  item: IMenuItem;
+  onClick?: (open: boolean) => void;
+}) => {
+  const pathname = usePathname();
+
+  const isActive = pathname === item.href;
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    if (onClick) {
+      onClick(false);
+    }
+  };
+
+  return (
+    <Link
+      key={item.name}
+      href={item.href}
+      onClick={onClick ? handleClick : undefined}
+      className={cn(
+        "text-gray-600 hover:text-purple-600 font-medium transition-colors duration-200",
+        isActive && "text-purple-600"
+      )}
+    >
+      {item.name}
+    </Link>
+  );
+};
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -30,13 +69,7 @@ export function Header() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-200"
-              >
-                {item.name}
-              </Link>
+              <NavLink key={item?.href} item={item} />
             ))}
           </div>
 
@@ -75,29 +108,18 @@ export function Header() {
           <div className="md:hidden border-t border-gray-200 py-4">
             <div className="flex flex-col space-y-4">
               {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-600 hover:text-purple-600 font-medium transition-colors duration-200 px-2 py-1"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
+                <NavLink key={item?.href} item={item} />
               ))}
               <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="border-gray-300 text-gray-700"
-                >
-                  Sign in
-                </Button>
-                <Button
-                  size="sm"
-                  className="bg-purple-600 hover:bg-purple-700 text-white"
-                >
-                  Get started
-                </Button>
+                <Link href="/login">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="border-gray-300 text-gray-700"
+                  >
+                    Sign in
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
